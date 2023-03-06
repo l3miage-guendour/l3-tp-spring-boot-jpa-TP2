@@ -3,9 +3,15 @@ package fr.uga.l3miage.library.data.domain;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
+
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Entity
+@DiscriminatorColumn(name = "type")
 public abstract class Person {
 
     private String id;

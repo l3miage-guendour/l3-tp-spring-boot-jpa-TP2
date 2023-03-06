@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.Entity;
 
+@Entity
 public class Author {
 
     private Long id;
