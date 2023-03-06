@@ -2,6 +2,8 @@ package fr.uga.l3miage.library.data.repo;
 
 import fr.uga.l3miage.library.data.domain.Author;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,8 +43,9 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      */
     @Override
     public List<Author> all() {
-        // TODO
-        return null;
+        return entityManager.createQuery("SELECT a FROM Author a ORDER BY a.fullName",
+                                        Author.class)
+                            .getResultList();
     }
 
     /**
@@ -52,8 +55,10 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      * @return une liste d'auteurs trié par nom
      */
     public List<Author> searchByName(String namePart) {
-        // TODO
-        return null;
+        return entityManager.createNamedQuery("SELECT a FROM Author a WHERE LOWER(a.fullName) LIKE :name ORDER BY a.fullName",
+                                             Author.class)
+                            .setParameter("name", '%' + namePart.toLowerCase() + '%')
+                            .getResultList();
     }
 
     /**
