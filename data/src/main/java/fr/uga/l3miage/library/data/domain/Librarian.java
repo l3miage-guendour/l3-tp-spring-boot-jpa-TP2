@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Entity;
 
-@Entity
+
 public class Librarian extends Person {
 
     private Librarian manager;

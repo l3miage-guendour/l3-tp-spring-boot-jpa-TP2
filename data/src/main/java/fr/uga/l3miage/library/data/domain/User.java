@@ -7,7 +7,6 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 
 // Attention le mot 'user' est reservé
-@Entity
 public class User extends Person {
     private Date registered;
     private float lateRatio;
