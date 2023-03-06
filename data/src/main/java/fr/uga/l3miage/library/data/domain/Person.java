@@ -3,6 +3,9 @@ package fr.uga.l3miage.library.data.domain;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public abstract class Person {
 
     private String id;

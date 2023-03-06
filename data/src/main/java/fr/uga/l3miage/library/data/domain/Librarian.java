@@ -2,6 +2,9 @@ package fr.uga.l3miage.library.data.domain;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Librarian extends Person {
 
     private Librarian manager;

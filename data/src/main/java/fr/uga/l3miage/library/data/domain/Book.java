@@ -1,18 +1,28 @@
 package fr.uga.l3miage.library.data.domain;
 
+import jakarta.annotation.Generated;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
 public class Book {
-
+    
     private Long id;
+
     private String title;
+
     private long isbn;
+
     private String publisher;
+
     private short year;
+
     private Language language;
 
     @Transient
