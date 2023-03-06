@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Entity;
 
-@Entity
 public class Borrow {
     private Long id;
     private List<Book> books;

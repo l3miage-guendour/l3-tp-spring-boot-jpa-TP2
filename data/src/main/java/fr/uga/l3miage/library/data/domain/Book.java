@@ -6,20 +6,37 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedQueries;
 
+
+
+@NamedQueries({
+    @NamedQuery(
+        name="all-books",
+        query="select b from Book b"),
+    @NamedQuery(
+        name="find-books-by-title",
+        query="select book from Book book where book.title = %:titlePart%"), 
+    @NamedQuery(
+        name="find-books-by-author-and-title",
+        query="select book from Book book  where book.name = :name and book.authors = :author"),
+})
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column (name="title")
+    @Column (name="title", nullable = false)
     private String title;
 
-    @Column (name="isbn")
+    @Column (name="isbn", nullable = false)
     private long isbn;
 
     @Column (name="publisher")
@@ -31,7 +48,7 @@ public class Book {
     @Column (name="language")
     private Language language;
 
-    @ManyToMany(mappedBy = "Book")
+    @ManyToMany(mappedBy = "books")
     private Set<Author> authors;
 
     public Long getId() {

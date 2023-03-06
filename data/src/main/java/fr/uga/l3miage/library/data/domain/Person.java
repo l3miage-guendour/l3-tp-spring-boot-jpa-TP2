@@ -9,9 +9,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
 
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@Entity
-@DiscriminatorColumn(name = "type")
+
 public abstract class Person {
 
     private String id;
