@@ -26,6 +26,7 @@ public class Book {
     private Language language;
 
     @Transient
+
     private Set<Author> authors;
 
     public Long getId() {
