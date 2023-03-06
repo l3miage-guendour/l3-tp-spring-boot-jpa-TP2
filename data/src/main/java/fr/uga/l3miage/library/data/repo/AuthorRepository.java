@@ -67,8 +67,10 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
      * @return true si l'auteur partage
      */
     public boolean checkAuthorByIdHavingCoAuthoredBooks(long authorId) {
-        // TODO
-        return false;
+        return !entityManager.createQuery("SELECT a FROM Author a JOIN a.books b JOIN b.authors ba WHERE a.id = :authorId AND ba.id <> :authorId", Author.class)
+                            .setParameter("authorId", authorId)
+                            .getResultList()
+                            .isEmpty();
     }
 
 }
