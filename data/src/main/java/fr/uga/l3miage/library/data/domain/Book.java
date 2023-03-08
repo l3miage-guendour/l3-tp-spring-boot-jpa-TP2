@@ -16,7 +16,7 @@ import jakarta.persistence.NamedQueries;
 
 
 
-@NamedQueries({
+/* @NamedQueries({
     @NamedQuery(
         name="all-books",
         query="select b from Book b"),
@@ -26,7 +26,7 @@ import jakarta.persistence.NamedQueries;
     @NamedQuery(
         name="find-books-by-author-and-title",
         query="select book from Book book  where book.name = :name and book.authors = :author"),
-})
+}) */
 @Entity
 public class Book {
     @Id
