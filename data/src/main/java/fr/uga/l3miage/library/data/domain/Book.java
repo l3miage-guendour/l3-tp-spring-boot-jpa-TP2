@@ -42,13 +42,14 @@ public class Book {
     @Column (name="publisher")
     private String publisher;
 
-    @Column (name="year")
+    @Column (name="yearB")
     private short year;
 
     @Column (name="language")
     private Language language;
 
-    @ManyToMany(mappedBy = "books")
+    @Column
+    @ManyToMany
     private Set<Author> authors;
 
     public Long getId() {

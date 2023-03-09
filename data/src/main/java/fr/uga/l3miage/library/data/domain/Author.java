@@ -21,7 +21,8 @@ public class Author {
     @Column (name = "fullName")
     private String fullName;
 
-    @ManyToMany
+    @Column
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 
     public Long getId() {
