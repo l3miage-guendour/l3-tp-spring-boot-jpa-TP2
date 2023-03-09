@@ -11,22 +11,23 @@ import jakarta.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.NamedQueries;
 
 
 
-/* @NamedQueries({
+
+/*@NamedQueries({
     @NamedQuery(
         name="all-books",
-        query="select b from Book b"),
+        query="select b from Book b ORDER BY b.title"),
     @NamedQuery(
         name="find-books-by-title",
         query="select book from Book book where book.title = %:titlePart%"), 
     @NamedQuery(
         name="find-books-by-author-and-title",
         query="select book from Book book  where book.name = :name and book.authors = :author"),
-}) */
+
+})*/
+
 @Entity
 public class Book {
     @Id

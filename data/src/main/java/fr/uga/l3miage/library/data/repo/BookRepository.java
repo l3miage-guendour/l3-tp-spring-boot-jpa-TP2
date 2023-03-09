@@ -41,7 +41,9 @@ public class BookRepository implements CRUDRepository<Long, Book> {
      * @return une liste de livres
      */
     public List<Book> all() {
-        return entityManager.createNamedQuery("all-books", Book.class).getResultList();
+        return entityManager.createQuery("SELECT b FROM Book b ORDER BY b.title",
+                                             Book.class)
+                            .getResultList();
     }
 
     /**
@@ -50,10 +52,10 @@ public class BookRepository implements CRUDRepository<Long, Book> {
      * @return une liste de livres
      */
     public List<Book> findByContainingTitle(String titlePart) {
-
-        return entityManager.createNamedQuery("find-books-by-title", Book.class)
-                .setParameter("title",  titlePart)
-                .getResultList();
+        return entityManager.createQuery("SELECT b FROM Book b WHERE LOWER(b.title) LIKE :titre ORDER BY b.title",
+                                         Book.class)
+                            .setParameter("titre", '%' + titlePart.toLowerCase() + '%')
+                            .getResultList();
     }
 
     /**
@@ -63,10 +65,9 @@ public class BookRepository implements CRUDRepository<Long, Book> {
      * @return une liste de livres
      */
     public List<Book> findByAuthorIdAndContainingTitle(Long authorId, String titlePart) {
-        // TODO créer les named query
-        return entityManager.createNamedQuery("find-books-by-author-and-title", Book.class)
-                // TODO completer l'appel pour utiliser les paramètres de cette méthode
-                .getResultList();
+        return entityManager.createQuery("SELECT b FROM Book b WHERE b.name LIKE :name AND b.authors LIKE :author",
+                                         Book.class)
+                            .getResultList();
     }
 
     /**

@@ -1,7 +1,6 @@
 package fr.uga.l3miage.library.data.repo;
 
 import fr.uga.l3miage.library.data.domain.Author;
-import fr.uga.l3miage.library.data.domain.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
@@ -71,10 +70,7 @@ public class AuthorRepository implements CRUDRepository<Long, Author> {
         //SELECT DISTINCT a1 FROM Author a1 JOIN a1.books b JOIN b.authors a2 WHERE a1.id = :authorId AND a2.id <> :authorId
         Query query = entityManager.createQuery("SELECT DISTINCT a1 FROM Author a1 JOIN a1.books b JOIN b.authors a2 WHERE a1.id = :authorId AND a2.id <> :authorId");
         query.setParameter("authorId", authorId);
-
-
         boolean result = !(query.getResultList().isEmpty());
-        return result;                     
+        return result;
     }
-
 }
