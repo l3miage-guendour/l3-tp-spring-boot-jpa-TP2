@@ -77,8 +77,9 @@ public class BookRepository implements CRUDRepository<Long, Book> {
      */
     public List<Book> findBooksByAuthorContainingName(String namePart) {
         // TODO créer les named query
-        return entityManager.createNamedQuery("find-books-by-authors-name", Book.class)
+        return entityManager.createQuery("SELECT b FROM Book b JOIN b.authors a WHERE LOWER (a.fullName) LIKE :authorName", Book.class)
                 // TODO completer l'appel pour utiliser le paramètre de cette méthode
+                .setParameter("authorName", '%' + namePart.toLowerCase() + '%')
                 .getResultList();
     }
 
