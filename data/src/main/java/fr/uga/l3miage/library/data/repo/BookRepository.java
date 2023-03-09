@@ -65,8 +65,10 @@ public class BookRepository implements CRUDRepository<Long, Book> {
      * @return une liste de livres
      */
     public List<Book> findByAuthorIdAndContainingTitle(Long authorId, String titlePart) {
-        return entityManager.createQuery("SELECT b FROM Book b WHERE b.name LIKE :name AND b.authors LIKE :author",
+        return entityManager.createQuery("SELECT b FROM Book b JOIN b.authors a WHERE LOWER(b.title) LIKE :titre AND a.id = :author ORDER BY b.title",
                                          Book.class)
+                            .setParameter("titre", '%' + titlePart.toLowerCase() + '%')
+                            .setParameter("author", authorId )
                             .getResultList();
     }
 
