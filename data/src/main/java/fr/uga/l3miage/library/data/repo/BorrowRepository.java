@@ -2,12 +2,13 @@ package fr.uga.l3miage.library.data.repo;
 
 import fr.uga.l3miage.library.data.domain.Borrow;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 
