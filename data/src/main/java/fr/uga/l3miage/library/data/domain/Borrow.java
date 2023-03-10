@@ -31,7 +31,7 @@ public class Borrow {
     @Temporal(TemporalType.DATE) 
     private Date requestedReturn;
 
-    @OneToOne
+    @OneToMany
     private User borrower;
 
     @OneToOne
