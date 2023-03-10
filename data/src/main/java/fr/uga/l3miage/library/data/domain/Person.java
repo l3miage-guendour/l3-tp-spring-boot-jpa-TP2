@@ -25,7 +25,7 @@ import jakarta.persistence.TemporalType;
 
 public abstract class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy =  GenerationType.UUID)
     private String id;
 
     @Column(name="gender")
