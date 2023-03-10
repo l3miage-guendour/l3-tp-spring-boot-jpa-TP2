@@ -7,6 +7,8 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -91,8 +93,11 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return les emprunt qui sont bientôt en retard
      */
     public List<Borrow> findAllBorrowThatWillLateWithin(int days) {
-        // TODO
-        return null;
+        Date currentDate = new Date();
+        Date dueDate = new Date(currentDate.getTime() + days * 24 * 60 * 60 * 1000);
+        List<Borrow> borrows = entityManager.createQuery("SELECT b FROM Borrow b WHERE b.finished = false AND b.requestedReturn <= :dueDate", Borrow.class)
+            .setParameter("dueDate", new java.sql.Date(dueDate.getTime()), TemporalType.DATE)
+            .getResultList();
+        return borrows;
     }
-
 }
