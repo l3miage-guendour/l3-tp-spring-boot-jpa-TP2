@@ -2,6 +2,8 @@ package fr.uga.l3miage.library.data.repo;
 
 import fr.uga.l3miage.library.data.domain.Borrow;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,8 +58,10 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return le nombre de livre
      */
     public int countBorrowedBooksByUser(String userId) {
-        // TODO
-        return 0;
+        // à vérifier ----------------------------------------------------------------
+        int nbBorrow = entityManager.createQuery("SELECT COUNT(b) FROM Borrow b WHERE b.user.id = :userId", Integer.class)
+                                    .getSingleResult();
+        return nbBorrow;
     }
 
     /**
@@ -78,7 +82,9 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      */
     public List<Borrow> foundAllLateBorrow() {
         // TODO
-        return null;
+        return entityManager.createQuery("SELECT b FROM Borrow b WHERE b.requestedReturn < YEAR(CURRENT_DATE) ORDER BY b.requestedReturn ASC",
+                                        Borrow.class)
+                            .getResultList();
     }
 
     /**
