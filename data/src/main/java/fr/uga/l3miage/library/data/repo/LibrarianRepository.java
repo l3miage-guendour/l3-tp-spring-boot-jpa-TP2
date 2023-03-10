@@ -43,8 +43,9 @@ public class LibrarianRepository implements CRUDRepository<String, Librarian> {
      * @return les bibliothéquaires les plus actif
      */
     public List<Librarian> top3WorkingLibrarians() {
-        // TODO
-        return null;
+        return entityManager.createQuery("SELECT l FROM Librarian l JOIN l.borrow lb GROUP BY l LIMIT 3",
+                                        Librarian.class)
+                            .getResultList();
     }
 
 }
