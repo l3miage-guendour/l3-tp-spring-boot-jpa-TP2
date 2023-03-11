@@ -1,0 +1,3 @@
+1. On a utilisé SINGLE_TABLE car la profondeur de l'heritage était basse et qu'il y'avais peu de champs qui n'etait pas hérité
+et que donc il ne pouvais avoir de probleme de colission
+2. L'un des probleme de concept est que borrowed contenue dans borros est uni directionnel, ce qui rendais difficile l'acces a l'utilisateur

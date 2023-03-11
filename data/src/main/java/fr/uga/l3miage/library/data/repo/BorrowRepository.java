@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -78,7 +76,13 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return le nombre de livre
      */
     public int countCurrentBorrowedBooksByUser(String userId) {
-        return 0;
+        TypedQuery<Long> query = entityManager.createQuery(
+            "SELECT COUNT(DISTINCT book.id) FROM Borrow borrow JOIN borrow.books book WHERE borrow.borrower.id = :userId AND borrow.finished = false", 
+            Long.class
+            );
+        query.setParameter("userId", userId);
+        Long result = query.getSingleResult();
+        return result != null ? result.intValue() : 0;
     }
 
     /**
@@ -87,7 +91,6 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return la liste des emprunt en retard
      */
     public List<Borrow> foundAllLateBorrow() {
-
         return entityManager.createQuery(
                 "SELECT b FROM Borrow b WHERE b.requestedReturn < :now ORDER BY b.requestedReturn ASC",
                 Borrow.class)
@@ -103,9 +106,9 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      */
     public List<Borrow> findAllBorrowThatWillLateWithin(int days) {
         Date currentDate = new Date();
-        Date dueDate = new Date(currentDate.getTime() + days * 24 * 60 * 60 * 1000);
-        List<Borrow> borrows = entityManager.createQuery("SELECT b FROM Borrow b WHERE b.finished = false AND b.requestedReturn <= :dueDate", Borrow.class)
-            .setParameter("dueDate", new java.sql.Date(dueDate.getTime()), TemporalType.DATE)
+        Date renduDate = new Date(currentDate.getTime() + days * 24 * 60 * 60 * 1000);
+        List<Borrow> borrows = entityManager.createQuery("SELECT b FROM Borrow b WHERE b.finished = false AND b.requestedReturn <= :renduDate", Borrow.class)
+            .setParameter("renduDate", new java.sql.Date(renduDate.getTime()), TemporalType.DATE)
             .getResultList();
         return borrows;
     }

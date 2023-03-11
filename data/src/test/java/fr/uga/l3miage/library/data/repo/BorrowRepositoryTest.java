@@ -80,7 +80,19 @@ class BorrowRepositoryTest extends Base {
 
     @Test
     void countCurrentBorrowedBooksByUser() {
-        // TODO
+    
+    // On crée un emprunt en cours de test
+    Borrow inProgress = Fixtures.newBorrow(u1, l1, b1, b2);
+    Borrow noBorrow = Fixtures.newBorrow(u2,l1);
+    entityManager.persist(inProgress);
+    entityManager.persist(noBorrow);
+    entityManager.flush();
+    
+    // On appelle la fonction à tester et on vérifie le résultat
+    int nbCurrentBorrowedBooks = repository.countCurrentBorrowedBooksByUser(u1.getId().toString());
+    assertThat(nbCurrentBorrowedBooks).isEqualTo(2);
+    nbCurrentBorrowedBooks = repository.countBorrowedBooksByUser(u2.getId().toString());
+    assertThat(nbCurrentBorrowedBooks).isEqualTo(0);
     }
 
 
