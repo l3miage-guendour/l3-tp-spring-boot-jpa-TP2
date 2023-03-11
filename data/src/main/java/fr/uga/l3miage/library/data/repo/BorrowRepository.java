@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -62,9 +63,11 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return le nombre de livre
      */
     public int countBorrowedBooksByUser(String userId) {
-        // à vérifier ----------------------------------------------------------------
-        int nbBorrow = entityManager.createQuery("SELECT COUNT(b) FROM Borrow b WHERE b.user.id = :userId", Integer.class)
-                                    .getSingleResult();
+        int nbBorrow = entityManager.createQuery("SELECT COUNT(bb) FROM Borrow b JOIN b.borrower bu JOIN b.books bb WHERE bu.id = :userId ",
+                                                 Long.class)
+                                                 .setParameter("userId", userId)
+                                                 .getSingleResult()
+                                                 .intValue();
         return nbBorrow;
     }
 
@@ -75,7 +78,6 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return le nombre de livre
      */
     public int countCurrentBorrowedBooksByUser(String userId) {
-        // TODO
         return 0;
     }
 
@@ -85,10 +87,12 @@ public class BorrowRepository implements CRUDRepository<String, Borrow> {
      * @return la liste des emprunt en retard
      */
     public List<Borrow> foundAllLateBorrow() {
-        // TODO
-        return entityManager.createQuery("SELECT b FROM Borrow b WHERE b.requestedReturn < YEAR(CURRENT_DATE) ORDER BY b.requestedReturn ASC",
-                                        Borrow.class)
-                            .getResultList();
+
+        return entityManager.createQuery(
+                "SELECT b FROM Borrow b WHERE b.requestedReturn < :now ORDER BY b.requestedReturn ASC",
+                Borrow.class)
+                .setParameter("now", new Date())
+                .getResultList();
     }
 
     /**
