@@ -84,7 +84,7 @@ class BorrowRepositoryTest extends Base {
     }
 
 
-    
+
     @Test
     void countBorrowedBooksByUser() {
 
@@ -97,7 +97,10 @@ class BorrowRepositoryTest extends Base {
         assertThat(test1Borrows).isEqualTo(2);
         int test2Borrows = repository.countBorrowedBooksByUser(u2.getId());
         assertThat(test2Borrows).isEqualTo(0);
-
+        inProgress1.setFinished(true);
+        // ici on verifie que meme si on a rendu le(s) livre(s) on les comptes tjrs
+        int test1BorrowsV2 = repository.countBorrowedBooksByUser(u1.getId());
+        assertThat(test1BorrowsV2).isEqualTo(2);
     }
 
     @Test
